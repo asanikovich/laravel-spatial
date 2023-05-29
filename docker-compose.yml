@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  mysql8:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: 'laravel'
+      MYSQL_ROOT_PASSWORD: 'root'
