@@ -1,0 +1,11 @@
+includes:
+  - ./vendor/nunomaduro/larastan/extension.neon
+parameters:
+  paths:
+    - src
+    - tests
+  excludePaths:
+    - src/Geometry/GeometryFactory.php
+  level: max
+  checkMissingIterableValueType: true
+  checkGenericClassInNonGenericObjectType: false
