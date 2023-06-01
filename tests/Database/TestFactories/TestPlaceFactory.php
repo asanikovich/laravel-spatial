@@ -13,7 +13,7 @@ class TestPlaceFactory extends Factory
     protected $model = TestPlace::class;
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, string>
      */
     public function definition(): array
     {

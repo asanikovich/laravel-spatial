@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial;
 
-use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Types\Type;
 use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Support\Facades\DB;
 use ASanikovich\LaravelSpatial\Enums\GeometryType;
 use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
+use Throwable;
 
 final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
 {
     /**
      * @throws LaravelSpatialException
-     * @throws Exception
+     * @throws Throwable
      */
     public function boot(): void
     {
@@ -31,7 +31,7 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
     }
 
     /**
-     * @throws Exception
+     * @throws Throwable
      */
     private function registerDoctrineTypes(): void
     {
@@ -44,7 +44,7 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
 
     /**
      * @param class-string<Type> $class
-     * @throws Exception
+     * @throws Throwable
      */
     private function registerDoctrineType(string $class, string $type): void
     {
@@ -58,7 +58,7 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
      */
     private function validateConfig(): void
     {
-        /** @var array<class-string<Geometry\Geometry>> $config */
+        /** @var array<class-string<Geometry\Geometry>>|array<string> $config */
         $config = config('laravel-spatial');
 
         foreach (GeometryType::cases() as $type) {
@@ -70,6 +70,7 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
             }
 
             $baseClass = $type->getBaseGeometryClassName();
+            /** @phpstan-ignore-next-line  */
             if ($configType !== $baseClass && ! $configType instanceof $baseClass) {
                 throw new LaravelSpatialException(sprintf(
                     'Class for geometry type "%s" should be instance of "%s" ("%s" provided), please check config',

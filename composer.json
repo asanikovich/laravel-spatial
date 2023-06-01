@@ -35,9 +35,9 @@
         }
     },
     "scripts": {
-        "phpstan": "./vendor/bin/phpstan analyse --memory-limit=2G",
-        "pest": "./vendor/bin/pest",
-        "pest-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100",
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=2G",
+        "test": "vendor/bin/pest",
+        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage --min=100",
         "format": "vendor/bin/pint"
     },
     "config": {

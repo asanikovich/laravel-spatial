@@ -34,8 +34,8 @@ class GeometryCast implements CastsAttributes
         }
 
         if ($value instanceof Expression) {
-            $wkt = $this->extractWktFromExpression($value, $model->getConnection());
-            $srid = $this->extractSridFromExpression($value, $model->getConnection());
+            $wkt = $this->extractWktFromExpression($value);
+            $srid = $this->extractSridFromExpression($value);
 
             return $this->className::fromWkt($wkt, $srid);
         }
@@ -73,22 +73,16 @@ class GeometryCast implements CastsAttributes
         return $value->toSqlExpression($model->getConnection());
     }
 
-    private function extractWktFromExpression(Expression $expression, Connection $connection): string
+    private function extractWktFromExpression(Expression $expression): string
     {
-        $grammar = $connection->getQueryGrammar();
-        $expressionValue = $expression->getValue($grammar);
-
-        preg_match('/ST_GeomFromText\(\'(.+)\', .+(, .+)?\)/', (string) $expressionValue, $match);
+        preg_match('/ST_GeomFromText\(\'(.+)\', .+(, .+)?\)/', (string) $expression, $match);
 
         return $match[1];
     }
 
-    private function extractSridFromExpression(Expression $expression, Connection $connection): int
+    private function extractSridFromExpression(Expression $expression): int
     {
-        $grammar = $connection->getQueryGrammar();
-        $expressionValue = $expression->getValue($grammar);
-
-        preg_match('/ST_GeomFromText\(\'.+\', (.+)(, .+)?\)/', (string) $expressionValue, $match);
+        preg_match('/ST_GeomFromText\(\'.+\', (.+)(, .+)?\)/', (string) $expression, $match);
 
         return (int) $match[1];
     }

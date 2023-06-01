@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property-read int $id
+ * @property-read int $id_new
  * @property string $name
  * @property Point $point
  * @property MultiPoint $multi_point
@@ -26,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float|null $distance
  * @property float|null $distance_in_meters
  *
+ * @method static query()
  * @mixin Model
  */
 class TestPlace extends Model

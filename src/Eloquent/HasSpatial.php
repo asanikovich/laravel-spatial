@@ -33,20 +33,34 @@ trait HasSpatial
         Expression|Geometry|string $geometryOrColumn,
         string $alias = 'distance'
     ): Builder {
-        if (is_null($this->columns)) {
+        if (is_null($query->getQuery()->columns)) {
             $query->select();
         }
 
-        $query->selectRaw(
-            sprintf(
-                'ST_DISTANCE(%s, %s) AS %s',
-                $this->toSpatialExpressionString($query, $column),
-                $this->toSpatialExpressionString($query, $geometryOrColumn),
-                $alias,
-            )
-        );
+        return $query->selectRaw(sprintf(
+            'ST_DISTANCE(%s, %s) AS %s',
+            $this->toSpatialExpressionString($query, $column),
+            $this->toSpatialExpressionString($query, $geometryOrColumn),
+            $alias,
+        ));
+    }
 
-        return $query;
+    public function scopeWithDistanceSphere(
+        Builder $query,
+        Expression|Geometry|string $column,
+        Expression|Geometry|string $geometryOrColumn,
+        string $alias = 'distance'
+    ): Builder {
+        if (is_null($query->getQuery()->columns)) {
+            $query->select();
+        }
+
+        return $query->selectRaw(sprintf(
+            'ST_DISTANCE_SPHERE(%s, %s) AS %s',
+            $this->toSpatialExpressionString($query, $column),
+            $this->toSpatialExpressionString($query, $geometryOrColumn),
+            $alias,
+        ));
     }
 
     public function scopeWhereDistance(
@@ -81,28 +95,6 @@ trait HasSpatial
                 $this->toSpatialExpressionString($query, $column),
                 $this->toSpatialExpressionString($query, $geometryOrColumn),
                 $direction,
-            )
-        );
-
-        return $query;
-    }
-
-    public function scopeWithDistanceSphere(
-        Builder $query,
-        Expression|Geometry|string $column,
-        Expression|Geometry|string $geometryOrColumn,
-        string $alias = 'distance'
-    ): Builder {
-        if (is_null($this->columns)) {
-            $query->select();
-        }
-
-        $query->selectRaw(
-            sprintf(
-                'ST_DISTANCE_SPHERE(%s, %s) AS %s',
-                $this->toSpatialExpressionString($query, $column),
-                $this->toSpatialExpressionString($query, $geometryOrColumn),
-                $alias,
             )
         );
 
@@ -337,6 +329,6 @@ trait HasSpatial
             $expression = $query->raw($grammar->wrap($value));
         }
 
-        return (string)$expression->getValue($grammar);
+        return (string)$expression;
     }
 }
