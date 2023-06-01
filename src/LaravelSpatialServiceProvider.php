@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial;
 
+use ASanikovich\LaravelSpatial\Enums\GeometryType;
+use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use Doctrine\DBAL\Types\Type;
 use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Support\Facades\DB;
-use ASanikovich\LaravelSpatial\Enums\GeometryType;
-use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use Throwable;
 
 final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
@@ -43,7 +43,8 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
     }
 
     /**
-     * @param class-string<Type> $class
+     * @param  class-string<Type>  $class
+     *
      * @throws Throwable
      */
     private function registerDoctrineType(string $class, string $type): void

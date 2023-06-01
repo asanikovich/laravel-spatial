@@ -5,10 +5,9 @@ use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use ASanikovich\LaravelSpatial\Geometry\LineString;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Support\Facades\DB;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('creates a model record with null geometry', function (): void {
     /** @var TestPlace $testPlace */

@@ -5,9 +5,8 @@ use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use ASanikovich\LaravelSpatial\Geometry\Geometry;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('creates a model record with point', function (): void {
     $point = new Point(0, 180);

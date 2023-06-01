@@ -6,9 +6,8 @@ use ASanikovich\LaravelSpatial\Tests\Custom\CustomPoint;
 use ASanikovich\LaravelSpatial\Tests\Custom\CustomPointConfig;
 use ASanikovich\LaravelSpatial\Tests\Custom\CustomTestPlace;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('creates a model record with custom point', function (): void {
     $point = new CustomPoint(0, 180);

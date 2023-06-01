@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial\Geometry;
 
+use ASanikovich\LaravelSpatial\Enums\GeometryType;
+use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use Geometry as geoPHPGeometry;
 use GeometryCollection as geoPHPGeometryCollection;
 use geoPHP;
 use LineString as geoPHPLineString;
-use ASanikovich\LaravelSpatial\Enums\GeometryType;
-use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use MultiLineString as geoPHPMultiLineString;
 use MultiPoint as geoPHPMultiPoint;
 use MultiPolygon as geoPHPMultiPolygon;

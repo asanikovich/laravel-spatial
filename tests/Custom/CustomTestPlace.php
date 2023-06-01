@@ -29,6 +29,9 @@ class CustomTestPlace extends Model
         'point_with_line_string_cast',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'point' => CustomPoint::class,
     ];

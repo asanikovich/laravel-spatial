@@ -1,6 +1,5 @@
 <?php
 
-use ASanikovich\LaravelSpatial\Database\Connection;
 use ASanikovich\LaravelSpatial\Enums\Srid;
 use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use ASanikovich\LaravelSpatial\Geometry\Geometry;

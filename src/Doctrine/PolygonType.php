@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial\Doctrine;
 
+use ASanikovich\LaravelSpatial\Enums\GeometryType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use ASanikovich\LaravelSpatial\Enums\GeometryType;
 
 final class PolygonType extends Type
 {

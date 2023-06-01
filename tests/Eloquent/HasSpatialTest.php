@@ -5,10 +5,9 @@ use ASanikovich\LaravelSpatial\Geometry\LineString;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use ASanikovich\LaravelSpatial\Geometry\Polygon;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Support\Facades\DB;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('calculates distance', function (): void {
     TestPlace::factory()->create(['point' => new Point(0, 0, Srid::WGS84->value)]);
@@ -30,7 +29,7 @@ it('calculates distance - without axis-order', function (): void {
     $testPlaceWithDistance = TestPlace::withDistance('point', new Point(1, 1, Srid::WGS84->value))->firstOrFail();
 
     expect($testPlaceWithDistance->distance)->toBe(1.4142135623730951);
-})->skip(fn() => isSupportAxisOrder());
+})->skip(fn () => isSupportAxisOrder());
 
 it('calculates distance with alias', function (): void {
     TestPlace::factory()->create(['point' => new Point(0, 0, Srid::WGS84->value)]);
@@ -40,7 +39,7 @@ it('calculates distance with alias', function (): void {
         ->firstOrFail();
 
     expect($testPlaceWithDistance->distance_in_meters)->toBe(156897.79947260793);
-})->skip(fn() => !isSupportAxisOrder());
+})->skip(fn () => ! isSupportAxisOrder());
 
 it('calculates distance with alias - without axis-order', function (): void {
     TestPlace::factory()->create(['point' => new Point(0, 0, Srid::WGS84->value)]);
@@ -50,7 +49,7 @@ it('calculates distance with alias - without axis-order', function (): void {
         ->firstOrFail();
 
     expect($testPlaceWithDistance->distance_in_meters)->toBe(1.4142135623730951);
-})->skip(fn() => isSupportAxisOrder());
+})->skip(fn () => isSupportAxisOrder());
 
 it('filters by distance', function (): void {
     $pointWithinDistance = new Point(0, 0, Srid::WGS84->value);
@@ -64,7 +63,7 @@ it('filters by distance', function (): void {
 
     expect($testPlacesWithinDistance)->toHaveCount(1)
         ->and($testPlacesWithinDistance[0]->point)->toEqual($pointWithinDistance);
-})->skip(fn() => !isSupportAxisOrder());
+})->skip(fn () => ! isSupportAxisOrder());
 
 it('filters by distance - without axis-order', function (): void {
     $pointWithinDistance = new Point(0, 0, Srid::WGS84->value);
@@ -77,7 +76,7 @@ it('filters by distance - without axis-order', function (): void {
 
     expect($testPlacesWithinDistance)->toHaveCount(1)
         ->and($testPlacesWithinDistance[0]->point)->toEqual($pointWithinDistance);
-})->skip(fn() => isSupportAxisOrder());
+})->skip(fn () => isSupportAxisOrder());
 
 it('orders by distance ASC', function (): void {
     $closerTestPlace = TestPlace::factory()->create(['point' => new Point(1, 1, Srid::WGS84->value)]);
@@ -110,7 +109,7 @@ it('calculates distance sphere', function (): void {
 
     expect($testPlaceWithDistance->distance)->toBe(157249.59776850493)
         ->and($testPlaceWithDistance->name)->not()->toBeNull();
-})->skip(fn() => !isSupportAxisOrder());
+})->skip(fn () => ! isSupportAxisOrder());
 
 it('calculates distance sphere - without axis-order', function (): void {
     TestPlace::factory()->create(['point' => new Point(0, 0, Srid::WGS84->value)]);
@@ -120,7 +119,7 @@ it('calculates distance sphere - without axis-order', function (): void {
 
     expect($testPlaceWithDistance->distance)->toBe(157249.0357231545)
         ->and($testPlaceWithDistance->name)->not()->toBeNull();
-})->skip(fn() => isSupportAxisOrder());
+})->skip(fn () => isSupportAxisOrder());
 
 it('calculates distance sphere with alias', function (): void {
     TestPlace::factory()->create(['point' => new Point(0, 0, Srid::WGS84->value)]);
@@ -130,7 +129,7 @@ it('calculates distance sphere with alias', function (): void {
     $testPlaceWithDistance = TestPlace::withDistanceSphere('point', $point, 'distance_in_meters')->firstOrFail();
 
     expect($testPlaceWithDistance->distance_in_meters)->toBe(157249.59776850493);
-})->skip(fn() => !isSupportAxisOrder());
+})->skip(fn () => ! isSupportAxisOrder());
 
 it('calculates distance sphere with alias - without axis-order', function (): void {
     TestPlace::factory()->create(['point' => new Point(0, 0, Srid::WGS84->value)]);
@@ -140,7 +139,7 @@ it('calculates distance sphere with alias - without axis-order', function (): vo
     $testPlaceWithDistance = TestPlace::withDistanceSphere('point', $point, 'distance_in_meters')->firstOrFail();
 
     expect($testPlaceWithDistance->distance_in_meters)->toBe(157249.0357231545);
-})->skip(fn() => isSupportAxisOrder());
+})->skip(fn () => isSupportAxisOrder());
 
 it('filters distance sphere', function (): void {
     $pointWithinDistance = new Point(0, 0, Srid::WGS84->value);

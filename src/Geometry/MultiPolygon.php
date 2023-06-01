@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial\Geometry;
 
-use Illuminate\Support\Collection;
 use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
+use Illuminate\Support\Collection;
 
 /**
  * @property Collection<int, Polygon> $geometries

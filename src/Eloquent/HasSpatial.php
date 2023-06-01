@@ -33,7 +33,7 @@ trait HasSpatial
         Expression|Geometry|string $geometryOrColumn,
         string $alias = 'distance'
     ): Builder {
-        if (is_null($query->getQuery()->columns)) {
+        if (empty($query->getQuery()->columns)) {
             $query->select();
         }
 
@@ -51,7 +51,7 @@ trait HasSpatial
         Expression|Geometry|string $geometryOrColumn,
         string $alias = 'distance'
     ): Builder {
-        if (is_null($query->getQuery()->columns)) {
+        if (empty($query->getQuery()->columns)) {
             $query->select();
         }
 
@@ -329,6 +329,6 @@ trait HasSpatial
             $expression = $query->raw($grammar->wrap($value));
         }
 
-        return (string)$expression;
+        return (string) $expression;
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial\Enums;
 
-use Doctrine\DBAL\Types\Type;
 use ASanikovich\LaravelSpatial\Doctrine;
 use ASanikovich\LaravelSpatial\Geometry;
+use Doctrine\DBAL\Types\Type;
 
 enum GeometryType: string
 {

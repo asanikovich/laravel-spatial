@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial\Eloquent;
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Database\Connection;
 use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use ASanikovich\LaravelSpatial\Geometry\Geometry;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Query\Expression;
 
 class GeometryCast implements CastsAttributes

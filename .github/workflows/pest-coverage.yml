@@ -12,7 +12,7 @@ jobs:
       db:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: laravel
         ports:
           - 3306
@@ -34,4 +34,9 @@ jobs:
       - name: Execute tests
         env:
           DB_PORT: ${{ job.services.db.ports['3306'] }}
-        run: XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100
+        run: XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100 --coverage-clover coverage.xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
