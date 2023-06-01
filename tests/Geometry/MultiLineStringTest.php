@@ -7,9 +7,8 @@ use ASanikovich\LaravelSpatial\Geometry\LineString;
 use ASanikovich\LaravelSpatial\Geometry\MultiLineString;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('creates a model record with multi line string', function (): void {
     $multiLineString = new MultiLineString([

@@ -7,9 +7,8 @@ use ASanikovich\LaravelSpatial\Geometry\LineString;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use ASanikovich\LaravelSpatial\Geometry\Polygon;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('creates a model record with line string', function (): void {
     $lineString = new LineString([

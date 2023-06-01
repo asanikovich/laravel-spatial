@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace ASanikovich\LaravelSpatial\Geometry;
 
 use ArrayAccess;
+use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 
 class GeometryCollection extends Geometry implements ArrayAccess
 {

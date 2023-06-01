@@ -7,9 +7,8 @@ use ASanikovich\LaravelSpatial\Geometry\MultiPoint;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use ASanikovich\LaravelSpatial\Geometry\Polygon;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('creates a model record with multi point', function (): void {
     $multiPoint = new MultiPoint([

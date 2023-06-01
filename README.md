@@ -7,9 +7,9 @@
 
 **This Laravel package allows you to easily work with spatial data types and functions.**
 
-The latest version, v3, supports Laravel 10 and PHP 8.1+. For Laravel 8 or 9, and PHP 8.0, use v2.
+v1 supports Laravel 8,9 and PHP 8.1+.
 
-This package supports MySQL v8, MySQL v5.7, and MariaDB v10.
+This package supports MySQL v8 or v5.7, and MariaDB v10.
 
 ## Getting Started
 
@@ -21,11 +21,31 @@ You can install the package via composer:
 composer require asanikovich/laravel-spatial
 ```
 
+### Configuration
+
+Default Configuration file includes geometry types mapping:
+```php
+<?php
+
+use ASanikovich\LaravelSpatial\Enums\GeometryType;
+use ASanikovich\LaravelSpatial\Geometry;
+
+return [
+    GeometryType::POINT->value => Geometry\Point::class,
+    GeometryType::POLYGON->value => Geometry\Polygon::class,
+    /// ...
+];
+```
+
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-spatial-config"
 ```
+
+If you want you can override custom geometry types mapping:
+* globally by config file
+* by custom `$casts` in your model (top priority)
 
 ### Setting Up Your First Model
 
@@ -67,7 +87,7 @@ php artisan vendor:publish --tag="laravel-spatial-config"
     php artisan migrate
     ```
 
-4. In your new model, fill the `$fillable` and `$casts` arrays and use the `HasSpatial` trait:
+4. In your new model, fill `$casts` arrays and use the `HasSpatial` trait (fill the `$fillable` - optional):
 
     ```php
     namespace App\Models;
@@ -81,7 +101,6 @@ php artisan vendor:publish --tag="laravel-spatial-config"
     /**
      * @property Point $location
      * @property Polygon $area
-     * @method static SpatialBuilder<Place> query()
      */
     class Place extends Model
     {
@@ -155,10 +174,6 @@ echo $vacationCity->area->toJson(); // {"type":"Polygon","coordinates":[[[41.907
 
 For more comprehensive documentation on the API, please refer to the [API](API.md) page.
 
-## Tips for Improving IDE Support
-
-In order to get better IDE support, you can add a `query` method phpDoc annotation to your model:
-
 ```php
 /**
  * @method static SpatialBuilder query()
@@ -169,11 +184,10 @@ class Place extends Model
 }
 ```
 
-Create queries only with the `query()` static method:
+Create queries only with scopes methods:
 
 ```php
-Place::query()->whereDistance(...); // This is IDE-friendly
-Place::whereDistance(...); // This is not
+Place::whereDistance(...); // This is IDE-friendly
 ```
 
 ## Extension
@@ -207,10 +221,26 @@ echo $londonEyePoint->getName(); // Point
 
 Here are some useful commands for development:
 
-* Run tests: `composer pest`
-* Run tests with coverage: `composer pest-coverage`
-* Perform type checking: `composer phpstan`
-* Format your code: `composer format`
+Before running tests run db by docker-compose:
+```bash
+docker-compose up -d
+```
+Run tests:
+```bash
+composer run test
+```
+Run tests with coverage:
+```bash
+composer run test-coverage
+```
+Perform type checking:
+```bash
+composer run phpstan
+```
+Format your code:
+```bash
+composer run format
+```
 
 ## Updates and Changes
 
@@ -219,3 +249,7 @@ For details on updates and changes, please refer to our [CHANGELOG](CHANGELOG.md
 ## License
 
 Laravel Eloquent Spatial is released under The MIT License (MIT). For more information, please see our [License File](LICENSE.md).
+
+## Credits
+
+Originally inspired from [MatanYadaev's laravel-eloquent-spatial package](https://github.com/MatanYadaev/laravel-eloquent-spatial).

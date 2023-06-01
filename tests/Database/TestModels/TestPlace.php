@@ -28,7 +28,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property float|null $distance
  * @property float|null $distance_in_meters
  *
- * @method static query()
  * @mixin Model
  */
 class TestPlace extends Model
@@ -47,6 +46,9 @@ class TestPlace extends Model
         'point_with_line_string_cast',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'point' => Point::class,
         'multi_point' => MultiPoint::class,

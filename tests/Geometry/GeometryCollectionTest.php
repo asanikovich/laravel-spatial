@@ -8,9 +8,8 @@ use ASanikovich\LaravelSpatial\Geometry\LineString;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use ASanikovich\LaravelSpatial\Geometry\Polygon;
 use ASanikovich\LaravelSpatial\Tests\Database\TestModels\TestPlace;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
 
-uses(DatabaseTruncation::class);
+uses(getDatabaseTruncationClass());
 
 it('creates a model record with geometry collection', function (): void {
     $geometryCollection = new GeometryCollection([

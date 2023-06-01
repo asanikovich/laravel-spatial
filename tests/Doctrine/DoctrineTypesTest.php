@@ -1,7 +1,5 @@
 <?php
 
-use Doctrine\DBAL\Types\Type;
-use Illuminate\Support\Facades\DB;
 use ASanikovich\LaravelSpatial\Doctrine\GeometryCollectionType;
 use ASanikovich\LaravelSpatial\Doctrine\LineStringType;
 use ASanikovich\LaravelSpatial\Doctrine\MultiLineStringType;
@@ -9,6 +7,8 @@ use ASanikovich\LaravelSpatial\Doctrine\MultiPointType;
 use ASanikovich\LaravelSpatial\Doctrine\MultiPolygonType;
 use ASanikovich\LaravelSpatial\Doctrine\PointType;
 use ASanikovich\LaravelSpatial\Doctrine\PolygonType;
+use Doctrine\DBAL\Types\Type;
+use Illuminate\Support\Facades\DB;
 
 it('uses custom Doctrine types for spatial columns',
     function (string $column, string $typeClass, string $typeName): void {

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace ASanikovich\LaravelSpatial\Geometry;
 
+use ASanikovich\LaravelSpatial\Database\Connection;
+use ASanikovich\LaravelSpatial\Eloquent\GeometryCast;
+use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
+use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialJsonException;
 use geoPHP;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
@@ -15,10 +19,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Traits\Macroable;
 use JsonException;
 use JsonSerializable;
-use ASanikovich\LaravelSpatial\Database\Connection;
-use ASanikovich\LaravelSpatial\Eloquent\GeometryCast;
-use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
-use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialJsonException;
 use Stringable;
 use Throwable;
 use WKB as geoPHPWkb;
@@ -45,8 +45,7 @@ abstract class Geometry implements Castable, Arrayable, Jsonable, JsonSerializab
     {
         try {
             return json_encode($this, $options | JSON_THROW_ON_ERROR);
-        }
-        catch (JsonException $e) { // @codeCoverageIgnore
+        } catch (JsonException $e) { // @codeCoverageIgnore
             throw new LaravelSpatialJsonException($e->getMessage(), previous: $e); // @codeCoverageIgnore
         } // @codeCoverageIgnore
     }
