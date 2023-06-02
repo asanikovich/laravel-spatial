@@ -19,7 +19,10 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
      */
     public function boot(): void
     {
-        $this->publishes([__DIR__.'/../config/laravel-spatial.php' => config_path('laravel-spatial.php')]);
+        $this->publishes(
+            [__DIR__.'/../config/laravel-spatial.php' => config_path('laravel-spatial.php')],
+            'laravel-spatial-config'
+        );
 
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-spatial.php', 'laravel-spatial');
 
