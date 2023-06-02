@@ -82,7 +82,8 @@ it('creates an SQL expression from a geometry', function (): void {
 
     $expression = $point->toSqlExpression(DB::connection());
 
-    $expressionValue = $expression->getValue();
+    $grammar = DB::getQueryGrammar();
+    $expressionValue = $expression->getValue($grammar);
     expect($expressionValue)->toEqual("ST_GeomFromText('POINT(180 0)', 4326, 'axis-order=long-lat')");
 })->skip(fn () => ! isSupportAxisOrder());
 
@@ -91,7 +92,8 @@ it('creates an SQL expression from a geometry - without axis-order', function ()
 
     $expression = $point->toSqlExpression(DB::connection());
 
-    $expressionValue = $expression->getValue();
+    $grammar = DB::getQueryGrammar();
+    $expressionValue = $expression->getValue($grammar);
     expect($expressionValue)->toEqual("ST_GeomFromText('POINT(180 0)', 4326)");
 })->skip(fn () => isSupportAxisOrder());
 

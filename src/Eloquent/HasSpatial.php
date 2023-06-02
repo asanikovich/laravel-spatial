@@ -329,6 +329,6 @@ trait HasSpatial
             $expression = $query->raw($grammar->wrap($value));
         }
 
-        return (string) $expression;
+        return (string) $expression->getValue($grammar);
     }
 }

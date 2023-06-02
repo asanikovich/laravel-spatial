@@ -13,7 +13,7 @@ it('calculates distance', function (): void {
     TestPlace::factory()->create(['point' => new Point(0, 0, Srid::WGS84->value)]);
 
     /** @var TestPlace $testPlaceWithDistance */
-    $testPlaceWithDistance = TestPlace::query()->select(['id'])->selectRaw(DB::raw('id as id_new'))
+    $testPlaceWithDistance = TestPlace::query()->select(['id'])->selectRaw('id as id_new')
         ->withDistance('point', new Point(1, 1, Srid::WGS84->value))
         ->firstOrFail();
 
@@ -397,8 +397,9 @@ it('toSpatialExpressionString can handle a Geometry input', function (): void {
 
     $result = $method->invoke($model, $model->newQuery(), $polygon);
 
+    $grammar = $model->newQuery()->getGrammar();
     $connection = $model->newQuery()->getConnection();
-    $sqlSerializedPolygon = $polygon->toSqlExpression($connection)->getValue();
+    $sqlSerializedPolygon = $polygon->toSqlExpression($connection)->getValue($grammar);
     expect($result)->toBe($sqlSerializedPolygon);
 });
 

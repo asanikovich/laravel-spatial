@@ -7,7 +7,9 @@ namespace ASanikovich\LaravelSpatial\Eloquent;
 use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use ASanikovich\LaravelSpatial\Geometry\Geometry;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Database\Query\Expression;
+use Illuminate\Contracts\Database\Query\Expression;
+use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\Model;
 
 class GeometryCast implements CastsAttributes
 {
@@ -26,15 +28,15 @@ class GeometryCast implements CastsAttributes
      * @param  string|Expression|null  $value
      * @param  array<string, mixed>  $attributes
      */
-    public function get($model, string $key, mixed $value, array $attributes): ?Geometry
+    public function get(Model $model, string $key, mixed $value, array $attributes): ?Geometry
     {
         if (! $value) {
             return null;
         }
 
         if ($value instanceof Expression) {
-            $wkt = $this->extractWktFromExpression($value);
-            $srid = $this->extractSridFromExpression($value);
+            $wkt = $this->extractWktFromExpression($value, $model->getConnection());
+            $srid = $this->extractSridFromExpression($value, $model->getConnection());
 
             return $this->className::fromWkt($wkt, $srid);
         }
@@ -48,7 +50,7 @@ class GeometryCast implements CastsAttributes
      *
      * @throws LaravelSpatialException
      */
-    public function set($model, string $key, mixed $value, array $attributes): Expression|null
+    public function set(Model $model, string $key, mixed $value, array $attributes): Expression|null
     {
         if (! $value) {
             return null;
@@ -64,24 +66,27 @@ class GeometryCast implements CastsAttributes
 
         if (! ($value instanceof $this->className)) {
             $geometryType = is_object($value) ? $value::class : gettype($value);
-            throw new LaravelSpatialException(
-                sprintf('Expected %s, %s given.', static::class, $geometryType) // todo
-            );
+
+            throw new LaravelSpatialException(sprintf('Expected %s, %s given.', static::class, $geometryType));
         }
 
         return $value->toSqlExpression($model->getConnection());
     }
 
-    private function extractWktFromExpression(Expression $expression): string
+    private function extractWktFromExpression(Expression $expression, Connection $connection): string
     {
-        preg_match('/ST_GeomFromText\(\'(.+)\', .+(, .+)?\)/', (string) $expression, $match);
+        $expressionValue = $expression->getValue($connection->getQueryGrammar());
+
+        preg_match('/ST_GeomFromText\(\'(.+)\', .+(, .+)?\)/', (string) $expressionValue, $match);
 
         return $match[1];
     }
 
-    private function extractSridFromExpression(Expression $expression): int
+    private function extractSridFromExpression(Expression $expression, Connection $connection): int
     {
-        preg_match('/ST_GeomFromText\(\'.+\', (.+)(, .+)?\)/', (string) $expression, $match);
+        $expressionValue = $expression->getValue($connection->getQueryGrammar());
+
+        preg_match('/ST_GeomFromText\(\'.+\', (.+)(, .+)?\)/', (string) $expressionValue, $match);
 
         return (int) $match[1];
     }
