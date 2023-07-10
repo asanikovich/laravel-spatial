@@ -13,6 +13,9 @@ function isSupportAxisOrder(): bool
     return (new Connection())->isSupportAxisOrder(DB::connection());
 }
 
+/**
+ * @return class-string
+ */
 function getDatabaseTruncationClass(): string
 {
     if (class_exists(DatabaseTruncation::class)) {
