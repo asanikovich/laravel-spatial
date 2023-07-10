@@ -140,8 +140,16 @@ abstract class Geometry implements Castable, Arrayable, Jsonable, JsonSerializab
      */
     public function toArray(): array
     {
+        if (str_starts_with(static::class, __NAMESPACE__)) {
+            $type = class_basename(static::class);
+        } else {
+            $parents = class_parents($this);
+            $types = array_values(array_filter($parents, fn (string $cl) => str_starts_with($cl, __NAMESPACE__)));
+            $type = class_basename($types[0]);
+        }
+
         return [
-            'type' => class_basename(static::class),
+            'type' => $type,
             'coordinates' => $this->getCoordinates(),
         ];
     }

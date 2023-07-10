@@ -74,8 +74,7 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
             }
 
             $baseClass = $type->getBaseGeometryClassName();
-            /** @phpstan-ignore-next-line  */
-            if ($configType !== $baseClass && ! $configType instanceof $baseClass) {
+            if (! is_a($configType, $baseClass, true)) {
                 throw new LaravelSpatialException(sprintf(
                     'Class for geometry type "%s" should be instance of "%s" ("%s" provided), please check config',
                     $type->value,
