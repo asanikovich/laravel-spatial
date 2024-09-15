@@ -10,6 +10,7 @@
 
 **This Laravel package allows you to easily work with spatial data types and functions.**
 
+* v3 supports Laravel 11+ and PHP 8.2+
 * v2 supports Laravel 10+ and PHP 8.1+
 * v1 supports Laravel 8,9 and PHP 8.1+
 
