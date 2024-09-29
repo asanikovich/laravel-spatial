@@ -50,7 +50,7 @@ class GeometryCast implements CastsAttributes
      *
      * @throws LaravelSpatialException
      */
-    public function set(Model $model, string $key, mixed $value, array $attributes): Expression|null
+    public function set(Model $model, string $key, mixed $value, array $attributes): ?Expression
     {
         if (! $value) {
             return null;

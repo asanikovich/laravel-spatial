@@ -23,7 +23,7 @@ use Stringable;
 use Throwable;
 use WKB as geoPHPWkb;
 
-abstract class Geometry implements Castable, Arrayable, Jsonable, JsonSerializable, Stringable
+abstract class Geometry implements Arrayable, Castable, Jsonable, JsonSerializable, Stringable
 {
     use Macroable;
 
@@ -189,7 +189,7 @@ abstract class Geometry implements Castable, Arrayable, Jsonable, JsonSerializab
     {
         $wkt = $this->toWkt();
 
-        if (! (new Connection())->isSupportAxisOrder($connection)) {
+        if (! (new Connection)->isSupportAxisOrder($connection)) {
             // @codeCoverageIgnoreStart
             return DB::raw(sprintf("ST_GeomFromText('%s', %d)", $wkt, $this->srid));
             // @codeCoverageIgnoreEnd

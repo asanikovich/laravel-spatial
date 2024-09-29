@@ -6,6 +6,4 @@ namespace ASanikovich\LaravelSpatial\Tests\Custom;
 
 use ASanikovich\LaravelSpatial\Geometry\Point;
 
-class CustomPointConfig extends Point
-{
-}
+class CustomPointConfig extends Point {}
