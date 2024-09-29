@@ -16,8 +16,7 @@ jobs:
         db: [ 'mysql:8.0', 'mysql:5.7', 'mariadb:10.9' ]
         dependency-version: [ prefer-stable ]
         include:
-          - laravel: ${{ matrix.laravel }}
-            testbench: ^8.0
+          - testbench: ^8.0
 
     services:
       db:
