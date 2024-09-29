@@ -4,7 +4,7 @@ namespace ASanikovich\LaravelSpatial\Eloquent;
 
 use ASanikovich\LaravelSpatial\Geometry\Geometry;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Expression;
+use Illuminate\Contracts\Database\Query\Expression;
 
 /**
  * @method static withDistance(Expression|Geometry|string $column, Expression|Geometry|string $geometryOrColumn, string $alias = 'distance')
