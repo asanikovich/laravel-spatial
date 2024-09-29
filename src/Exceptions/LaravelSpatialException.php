@@ -6,6 +6,4 @@ namespace ASanikovich\LaravelSpatial\Exceptions;
 
 use DomainException;
 
-class LaravelSpatialException extends DomainException
-{
-}
+class LaravelSpatialException extends DomainException {}

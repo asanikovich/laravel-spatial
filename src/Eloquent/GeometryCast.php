@@ -50,7 +50,7 @@ class GeometryCast implements CastsAttributes
      *
      * @throws LaravelSpatialException
      */
-    public function set(Model $model, string $key, mixed $value, array $attributes): Expression|null
+    public function set(Model $model, string $key, mixed $value, array $attributes): ?Expression
     {
         if (! $value) {
             return null;
@@ -79,7 +79,7 @@ class GeometryCast implements CastsAttributes
 
         preg_match('/ST_GeomFromText\(\'(.+)\', .+(, .+)?\)/', (string) $expressionValue, $match);
 
-        return $match[1];
+        return $match[1] ?? '';
     }
 
     private function extractSridFromExpression(Expression $expression, Connection $connection): int
@@ -88,6 +88,6 @@ class GeometryCast implements CastsAttributes
 
         preg_match('/ST_GeomFromText\(\'.+\', (.+)(, .+)?\)/', (string) $expressionValue, $match);
 
-        return (int) $match[1];
+        return (int) ($match[1] ?? 0);
     }
 }

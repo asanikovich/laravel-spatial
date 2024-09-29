@@ -9,7 +9,7 @@ uses(TestCase::class)->in(__DIR__);
 
 function isSupportAxisOrder(): bool
 {
-    return (new Connection())->isSupportAxisOrder(DB::connection());
+    return (new Connection)->isSupportAxisOrder(DB::connection());
 }
 
 /**

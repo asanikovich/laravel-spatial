@@ -8,7 +8,7 @@ use ASanikovich\LaravelSpatial\Enums\GeometryType;
 use ASanikovich\LaravelSpatial\Exceptions\LaravelSpatialException;
 use Doctrine\DBAL\Types\Type;
 use Illuminate\Database\DatabaseServiceProvider;
-use Illuminate\Support\Facades\DB;
+use RuntimeException;
 use Throwable;
 
 final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
@@ -28,9 +28,7 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
 
         $this->validateConfig();
 
-        if (DB::connection()->isDoctrineAvailable()) {
-            $this->registerDoctrineTypes();
-        }
+        $this->registerDoctrineTypes();
     }
 
     /**
@@ -43,18 +41,6 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
         }
 
         $this->registerDoctrineType(GeometryType::GEOMETRY_COLLECTION->getDoctrineClassName(), 'geomcollection');
-    }
-
-    /**
-     * @param  class-string<Type>  $class
-     *
-     * @throws Throwable
-     */
-    private function registerDoctrineType(string $class, string $type): void
-    {
-        DB::registerDoctrineType($class, $type, $type);
-
-        DB::connection()->registerDoctrineType($class, $type, $type);
     }
 
     /**
@@ -83,6 +69,26 @@ final class LaravelSpatialServiceProvider extends DatabaseServiceProvider
                     $configType,
                 ));
             }
+        }
+    }
+
+    private function isDoctrineAvailable(): bool
+    {
+        return class_exists('Doctrine\DBAL\Connection');
+    }
+
+    private function registerDoctrineType(Type|string $class, string $name): void
+    {
+        if (! $this->isDoctrineAvailable()) {
+            throw new RuntimeException(
+                'Registering a custom Doctrine type requires Doctrine DBAL (doctrine/dbal).'
+            );
+        }
+
+        if (! Type::hasType($name)) {
+            /** @var Type $type */
+            $type = is_string($class) ? new $class : $class;
+            Type::getTypeRegistry()->register($name, $type);
         }
     }
 }
